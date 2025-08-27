@@ -694,6 +694,13 @@
             </div>
         </div>
 
+        <!-- GA4 Test Button -->
+        <div style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+            <button id="ga4-test-btn" style="background: #4285f4; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 12px;">
+                Test GA4
+            </button>
+        </div>
+
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <div class="nav-item active" data-nav="home">
@@ -720,8 +727,67 @@
     </div>
 
     <script>
+        // Google Analytics Debug and Error Handling
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript Error:', e.error);
+            // Track errors in GA4
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'exception', {
+                    description: e.error?.message || 'Unknown error',
+                    fatal: false
+                });
+            }
+        });
+
+        // Check if GA4 is loaded
+        function checkGA4Status() {
+            if (typeof gtag === 'undefined') {
+                console.error('❌ GA4 not loaded! gtag function is undefined');
+                return false;
+            }
+            
+            if (typeof window.dataLayer === 'undefined') {
+                console.error('❌ GA4 dataLayer not found!');
+                return false;
+            }
+            
+            console.log('✅ GA4 is loaded and ready');
+            console.log('📊 Measurement ID: G-1NC81JD2X5');
+            console.log('📈 DataLayer:', window.dataLayer);
+            return true;
+        }
+
+        // Test GA4 functionality
+        function testGA4() {
+            if (typeof gtag === 'undefined') {
+                console.error('❌ Cannot test GA4 - gtag not available');
+                return;
+            }
+            
+            try {
+                // Test basic event
+                gtag('event', 'test_event', {
+                    event_category: 'debug',
+                    event_label: 'ga4_test',
+                    value: 1
+                });
+                console.log('✅ Test event sent to GA4');
+                
+                // Check dataLayer
+                console.log('📊 Current dataLayer:', window.dataLayer);
+            } catch (error) {
+                console.error('❌ Error testing GA4:', error);
+            }
+        }
+
         // Add animations on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Check GA4 status first
+            setTimeout(() => {
+                checkGA4Status();
+                testGA4();
+            }, 1000); // Wait 1 second for GA4 to load
+            
             const elements = document.querySelectorAll('.header, .date-bar, .progress-section, .cards-section, .bottom-nav');
             elements.forEach((el, index) => {
                 setTimeout(() => {
@@ -737,28 +803,44 @@
                 }, 300 + index * 100);
             });
             
-            // Google Analytics - Page view tracking
-            gtag('event', 'page_view', {
-                event_category: 'engagement',
-                event_label: 'homepage_loaded',
-                value: 1,
-                custom_parameter_1: 'page_view',
-                custom_parameter_2: 'homepage',
-                custom_parameter_3: new Date().toISOString()
-            });
+            // Google Analytics - Page view tracking with error handling
+            if (typeof gtag !== 'undefined') {
+                try {
+                    gtag('event', 'page_view', {
+                        event_category: 'engagement',
+                        event_label: 'homepage_loaded',
+                        value: 1,
+                        custom_parameter_1: 'page_view',
+                        custom_parameter_2: 'homepage',
+                        custom_parameter_3: new Date().toISOString()
+                    });
+                    console.log('✅ Page view event sent to GA4');
+                } catch (error) {
+                    console.error('❌ Error sending page view event:', error);
+                }
+            } else {
+                console.error('❌ Cannot send page view - gtag not available');
+            }
             
             // Track time spent on page
             let startTime = Date.now();
             window.addEventListener('beforeunload', function() {
-                const timeSpent = Math.round((Date.now() - startTime) / 1000);
-                gtag('event', 'time_on_page', {
-                    event_category: 'engagement',
-                    event_label: 'session_duration',
-                    value: timeSpent,
-                    custom_parameter_1: 'time_on_page',
-                    custom_parameter_2: `${timeSpent}s`,
-                    custom_parameter_3: new Date().toISOString()
-                });
+                if (typeof gtag !== 'undefined') {
+                    try {
+                        const timeSpent = Math.round((Date.now() - startTime) / 1000);
+                        gtag('event', 'time_on_page', {
+                            event_category: 'engagement',
+                            event_label: 'session_duration',
+                            value: timeSpent,
+                            custom_parameter_1: 'time_on_page',
+                            custom_parameter_2: `${timeSpent}s`,
+                            custom_parameter_3: new Date().toISOString()
+                        });
+                        console.log('✅ Time on page event sent to GA4');
+                    } catch (error) {
+                        console.error('❌ Error sending time on page event:', error);
+                    }
+                }
             });
         });
 
@@ -777,14 +859,21 @@
                 setTimeout(() => this.classList.remove('bounce'), 600);
                 
                 // Google Analytics tracking
-                gtag('event', 'date_selection', {
-                    event_category: 'navigation',
-                    event_label: `Day ${dayNum}`,
-                    value: parseInt(dayNum),
-                    custom_parameter_1: 'date_selection',
-                    custom_parameter_2: `day_${dayNum}`,
-                    custom_parameter_3: new Date().toISOString()
-                });
+                if (typeof gtag !== 'undefined') {
+                    try {
+                        gtag('event', 'date_selection', {
+                            event_category: 'navigation',
+                            event_label: `Day ${dayNum}`,
+                            value: parseInt(dayNum),
+                            custom_parameter_1: 'date_selection',
+                            custom_parameter_2: `day_${dayNum}`,
+                            custom_parameter_3: new Date().toISOString()
+                        });
+                        console.log('✅ Date selection event sent to GA4');
+                    } catch (error) {
+                        console.error('❌ Error sending date selection event:', error);
+                    }
+                }
             });
         });
 
@@ -1030,6 +1119,34 @@
                         document.activeElement.click();
                     }
                     break;
+            }
+        });
+
+        // GA4 Test Button
+        document.getElementById('ga4-test-btn').addEventListener('click', function() {
+            console.log('🧪 Testing GA4 functionality...');
+            checkGA4Status();
+            testGA4();
+            
+            // Send a test event
+            if (typeof gtag !== 'undefined') {
+                try {
+                    gtag('event', 'manual_test', {
+                        event_category: 'debug',
+                        event_label: 'manual_test_click',
+                        value: 1,
+                        custom_parameter_1: 'manual_test',
+                        custom_parameter_2: 'button_click',
+                        custom_parameter_3: new Date().toISOString()
+                    });
+                    console.log('✅ Manual test event sent to GA4');
+                    alert('GA4 test event sent! Check console for details.');
+                } catch (error) {
+                    console.error('❌ Error sending manual test event:', error);
+                    alert('Error sending GA4 test event. Check console for details.');
+                }
+            } else {
+                alert('GA4 not available! Check console for details.');
             }
         });
 
