@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applovin Design - Interactive Homepage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID', {
+            page_title: 'Applovin Homepage',
+            page_location: window.location.href,
+            custom_map: {
+                'custom_parameter_1': 'user_interaction_type',
+                'custom_parameter_2': 'element_clicked',
+                'custom_parameter_3': 'interaction_timestamp'
+            }
+        });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: white;
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .status-bar {
+            height: 44px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .battery {
+            width: 25px;
+            height: 12px;
+            border: 1px solid #000;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .battery-level {
+            width: 19px;
+            height: 8px;
+            background: #000;
+            border-radius: 1px;
+            position: absolute;
+            left: 2px;
+            top: 2px;
+        }
+
+        .header {
+            padding: 20px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .greeting {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .greeting h1 {
+            font-size: 24px;
+            font-weight: 500;
+            color: #000;
+        }
+
+        .greeting-icon {
+            width: 24px;
+            height: 24px;
+            background: #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .notification {
+            position: relative;
+        }
+
+        .notification-icon {
+            width: 24px;
+            height: 24px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .notification-icon:hover {
+            background: #e0e0e0;
+            transform: scale(1.1);
+        }
+
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff4757;
+            border-radius: 50%;
+            position: absolute;
+            top: -2px;
+            right: -2px;
+        }
+
+        .date-bar {
+            margin: 0 35px;
+            background: linear-gradient(90deg, #4CAF50, #2196F3);
+            border-radius: 8px;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-size: 12px;
+            position: relative;
+        }
+
+        .date-bar::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .date-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .date-numbers {
+            display: flex;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .date-number {
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .date-number:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.2);
+        }
+
+        .date-number.active {
+            background: rgba(255,255,255,0.8);
+            color: #333;
+        }
+
+        .cards-section {
+            margin: 20px 35px;
+            background: rgba(56, 173, 96, 0.1);
+            border-radius: 32px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #179721;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .refresh-btn {
+            width: 20px;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: #e0e0e0;
+            transform: rotate(180deg);
+        }
+
+        .activity-card {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .activity-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .activity-icon {
+            width: 64px;
+            height: 64px;
+            background: #efeff0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #666;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .activity-info {
+            flex: 1;
+        }
+
+        .activity-time {
+            color: #179721;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .activity-title {
+            color: #505050;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .activity-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .activity-arrow {
+            width: 24px;
+            height: 24px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .activity-arrow:hover {
+            background: #e0e0e0;
+            transform: scale(1.1);
+        }
+
+        .progress-section {
+            margin: 20px 35px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .progress-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .progress-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .progress-card h3 {
+            color: #bd6f00;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .progress-card .icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 15px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .progress-card .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff9600;
+            margin-bottom: 8px;
+            text-shadow: 0 0 16px rgba(0,0,0,0.1);
+        }
+
+        .progress-card .label {
+            font-size: 12px;
+            color: #989898;
+            margin-bottom: 15px;
+        }
+
+        .progress-card .description {
+            font-size: 12px;
+            color: #505050;
+            line-height: 1.4;
+        }
+
+        .progress-card .gauge {
+            width: 113px;
+            height: 113px;
+            margin: 0 auto 15px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #5cb1d1;
+            font-weight: 700;
+        }
+
+        .progress-card .gauge .fraction {
+            font-size: 12px;
+            color: #989898;
+            font-weight: 400;
+        }
+
+        .progress-card .arrow {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 24px;
+            height: 24px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-card .arrow:hover {
+            background: #e0e0e0;
+            transform: scale(1.1);
+        }
+
+        .progress-card .status-dot {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 32px 32px 0 0;
+            padding: 16px 20px 34px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        .nav-item:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .nav-item.active {
+            color: #6ab8d5;
+        }
+
+        .nav-item.active .nav-icon {
+            background: #6ab8d5;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 28px;
+            height: 28px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-text {
+            font-size: 10px;
+            color: #8e8e8e;
+            font-weight: 500;
+            letter-spacing: 0.6px;
+        }
+
+        .nav-item.active .nav-text {
+            color: #6ab8d5;
+        }
+
+        /* Responsive design */
+        @media (max-width: 400px) {
+            .phone-container {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Interactive elements */
+        .clickable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clickable:hover {
+            transform: scale(1.05);
+        }
+
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .ripple:active::after {
+            transform: scale(2);
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span>9:41</span>
+            </div>
+            <div class="status-right">
+                <div class="battery">
+                    <div class="battery-level"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="greeting">
+                <h1>Hi, John</h1>
+                <div class="greeting-icon">😊</div>
+            </div>
+            <div class="notification">
+                <div class="notification-icon">🔔</div>
+                <div class="notification-dot"></div>
+            </div>
+        </div>
+
+        <!-- Date Bar -->
+        <div class="date-bar">
+            <div class="date-text">Today, 5 June</div>
+            <div class="date-numbers">
+                <div class="date-number active" data-day="2">2</div>
+                <div class="date-number" data-day="3">3</div>
+                <div class="date-number" data-day="4">4</div>
+                <div class="date-number" data-day="5">5</div>
+                <div class="date-number" data-day="6">6</div>
+                <div class="date-number" data-day="7">7</div>
+                <div class="date-number" data-day="8">8</div>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-card clickable ripple" data-card="sb-coins">
+                <div class="status-dot"></div>
+                <h3>My SB coins</h3>
+                <div class="icon">💰</div>
+                <div class="value">1200</div>
+                <div class="label">Total SB</div>
+                <div class="description">You surpass 90% of your friends.</div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="progress-card clickable ripple" data-card="daily-goals">
+                <div class="status-dot"></div>
+                <h3>Daily goals</h3>
+                <div class="gauge">
+                    25<span class="fraction">/50</span>
+                </div>
+                <div class="description">Half way there, keep going!</div>
+                <div class="arrow">→</div>
+            </div>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="cards-section">
+            <div class="section-header">
+                <div class="section-title">Today's recommendation</div>
+                <div class="refresh-btn clickable ripple">🔄</div>
+            </div>
+
+            <div class="activity-card clickable ripple" data-activity="welcome-survey">
+                <div class="activity-icon">📊</div>
+                <div class="activity-info">
+                    <div class="activity-time">1m</div>
+                    <div class="activity-title">Welcome survey</div>
+                    <div class="activity-meta">
+                        <span>📄</span>
+                        <span>⏰</span>
+                    </div>
+                </div>
+                <div class="activity-arrow">→</div>
+            </div>
+
+            <div class="activity-card clickable ripple" data-activity="daily-poll">
+                <div class="activity-icon">🗳️</div>
+                <div class="activity-info">
+                    <div class="activity-time">5m</div>
+                    <div class="activity-title">Daily poll</div>
+                    <div class="activity-meta">
+                        <span>📄</span>
+                        <span>⏰</span>
+                    </div>
+                </div>
+                <div class="activity-arrow">→</div>
+            </div>
+
+            <div class="activity-card clickable ripple" data-activity="sugar-crush">
+                <div class="activity-icon">🎮</div>
+                <div class="activity-info">
+                    <div class="activity-time">15m</div>
+                    <div class="activity-title">Play Sugar Crush</div>
+                    <div class="activity-meta">
+                        <span>📄</span>
+                        <span>⏰</span>
+                    </div>
+                </div>
+                <div class="activity-arrow">→</div>
+            </div>
+
+            <div class="activity-card clickable ripple" data-activity="welcome-survey-2">
+                <div class="activity-icon">📋</div>
+                <div class="activity-info">
+                    <div class="activity-time">5m</div>
+                    <div class="activity-title">Welcome survey</div>
+                    <div class="activity-meta">
+                        <span>📄</span>
+                        <span>⏰</span>
+                    </div>
+                </div>
+                <div class="activity-arrow">→</div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-nav="home">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-text">Home</div>
+            </div>
+            <div class="nav-item" data-nav="answer">
+                <div class="nav-icon">✍️</div>
+                <div class="nav-text">Answer</div>
+            </div>
+            <div class="nav-item" data-nav="play">
+                <div class="nav-icon">🎮</div>
+                <div class="nav-text">Play</div>
+            </div>
+            <div class="nav-item" data-nav="shop">
+                <div class="nav-icon">🛍️</div>
+                <div class="nav-text">Shop</div>
+            </div>
+            <div class="nav-item" data-nav="discover">
+                <div class="nav-icon">🔍</div>
+                <div class="nav-text">Discover</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.header, .date-bar, .progress-section, .cards-section, .bottom-nav');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('fade-in');
+                }, index * 100);
+            });
+
+            // Add slide-up animation to cards
+            const cards = document.querySelectorAll('.activity-card, .progress-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('slide-up');
+                }, 300 + index * 100);
+            });
+            
+            // Google Analytics - Page view tracking
+            gtag('event', 'page_view', {
+                event_category: 'engagement',
+                event_label: 'homepage_loaded',
+                value: 1,
+                custom_parameter_1: 'page_view',
+                custom_parameter_2: 'homepage',
+                custom_parameter_3: new Date().toISOString()
+            });
+            
+            // Track time spent on page
+            let startTime = Date.now();
+            window.addEventListener('beforeunload', function() {
+                const timeSpent = Math.round((Date.now() - startTime) / 1000);
+                gtag('event', 'time_on_page', {
+                    event_category: 'engagement',
+                    event_label: 'session_duration',
+                    value: timeSpent,
+                    custom_parameter_1: 'time_on_page',
+                    custom_parameter_2: `${timeSpent}s`,
+                    custom_parameter_3: new Date().toISOString()
+                });
+            });
+        });
+
+        // Date number interaction
+        document.querySelectorAll('.date-number').forEach(day => {
+            day.addEventListener('click', function() {
+                document.querySelectorAll('.date-number').forEach(d => d.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update date text
+                const dayNum = this.getAttribute('data-day');
+                document.querySelector('.date-text').textContent = `Today, ${dayNum} June`;
+                
+                // Add bounce animation
+                this.classList.add('bounce');
+                setTimeout(() => this.classList.remove('bounce'), 600);
+                
+                // Google Analytics tracking
+                gtag('event', 'date_selection', {
+                    event_category: 'navigation',
+                    event_label: `Day ${dayNum}`,
+                    value: parseInt(dayNum),
+                    custom_parameter_1: 'date_selection',
+                    custom_parameter_2: `day_${dayNum}`,
+                    custom_parameter_3: new Date().toISOString()
+                });
+            });
+        });
+
+        // Activity card interaction
+        document.querySelectorAll('.activity-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const activity = this.getAttribute('data-activity');
+                showNotification(`Opening ${activity.replace('-', ' ')}...`);
+                
+                // Add click effect
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                // Google Analytics tracking
+                gtag('event', 'activity_card_click', {
+                    event_category: 'engagement',
+                    event_label: activity,
+                    value: 1,
+                    custom_parameter_1: 'activity_card_click',
+                    custom_parameter_2: activity,
+                    custom_parameter_3: new Date().toISOString()
+                });
+            });
+        });
+
+        // Progress card interaction
+        document.querySelectorAll('.progress-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const cardType = this.getAttribute('data-card');
+                showNotification(`Viewing ${cardType.replace('-', ' ')} details...`);
+                
+                // Add click effect
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                // Google Analytics tracking
+                gtag('event', 'progress_card_click', {
+                    event_category: 'engagement',
+                    event_label: cardType,
+                    value: 1,
+                    custom_parameter_1: 'progress_card_click',
+                    custom_parameter_2: cardType,
+                    custom_parameter_3: new Date().toISOString()
+                });
+            });
+        });
+
+        // Navigation interaction
+        document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.addEventListener('click', function() {
+                const navType = this.getAttribute('data-nav');
+                
+                // Update active state
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+                
+                showNotification(`Navigating to ${navType}...`);
+                
+                // Add bounce animation
+                this.classList.add('bounce');
+                setTimeout(() => this.classList.remove('bounce'), 600);
+                
+                // Google Analytics tracking
+                gtag('event', 'navigation_click', {
+                    event_category: 'navigation',
+                    event_label: navType,
+                    value: 1,
+                    custom_parameter_1: 'navigation_click',
+                    custom_parameter_2: navType,
+                    custom_parameter_3: new Date().toISOString()
+                });
+            });
+        });
+
+        // Refresh button interaction
+        document.querySelector('.refresh-btn').addEventListener('click', function() {
+            this.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = 'rotate(0deg)';
+            }, 600);
+            
+            showNotification('Refreshing recommendations...');
+            
+            // Simulate refresh by shuffling cards
+            const cards = document.querySelectorAll('.activity-card');
+            cards.forEach(card => {
+                card.style.opacity = '0.5';
+            });
+            
+            setTimeout(() => {
+                cards.forEach(card => {
+                    card.style.opacity = '1';
+                });
+            }, 1000);
+            
+            // Google Analytics tracking
+            gtag('event', 'refresh_click', {
+                event_category: 'engagement',
+                event_label: 'recommendations_refresh',
+                value: 1,
+                custom_parameter_1: 'refresh_click',
+                custom_parameter_2: 'recommendations',
+                custom_parameter_3: new Date().toISOString()
+            });
+        });
+
+        // Notification interaction
+        document.querySelector('.notification-icon').addEventListener('click', function() {
+            showNotification('You have 3 new notifications!');
+            
+            // Add bounce animation
+            this.classList.add('bounce');
+            setTimeout(() => this.classList.remove('bounce'), 600);
+            
+            // Google Analytics tracking
+            gtag('event', 'notification_click', {
+                event_category: 'engagement',
+                event_label: 'notifications_view',
+                value: 1,
+                custom_parameter_1: 'notification_click',
+                custom_parameter_2: 'notifications',
+                custom_parameter_3: new Date().toISOString()
+            });
+        });
+
+        // Arrow buttons interaction
+        document.querySelectorAll('.arrow').forEach(arrow => {
+            arrow.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.progress-card');
+                const cardType = card.getAttribute('data-card');
+                showNotification(`Viewing ${cardType.replace('-', ' ')} details...`);
+                
+                // Add click effect
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                // Google Analytics tracking
+                gtag('event', 'arrow_button_click', {
+                    event_category: 'engagement',
+                    event_label: cardType,
+                    value: 1,
+                    custom_parameter_1: 'arrow_button_click',
+                    custom_parameter_2: cardType,
+                    custom_parameter_3: new Date().toISOString()
+                });
+            });
+        });
+
+        // Activity arrow interaction
+        document.querySelectorAll('.activity-arrow').forEach(arrow => {
+            arrow.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.activity-card');
+                const activity = card.getAttribute('data-activity');
+                showNotification(`Opening ${activity.replace('-', ' ')}...`);
+                
+                // Add click effect
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                // Google Analytics tracking
+                gtag('event', 'activity_arrow_click', {
+                    event_category: 'engagement',
+                    event_label: activity,
+                    value: 1,
+                    custom_parameter_1: 'activity_arrow_click',
+                    custom_parameter_2: activity,
+                    custom_parameter_3: new Date().toISOString()
+                });
+            });
+        });
+
+        // Notification system
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #333;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                font-size: 14px;
+                font-weight: 500;
+                z-index: 1000;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.style.opacity = '1';
+            }, 100);
+            
+            // Hide and remove notification
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 2000);
+        }
+
+        // Add hover effects for better interactivity
+        document.querySelectorAll('.clickable').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    document.querySelector('[data-nav="home"]').click();
+                    break;
+                case 'ArrowRight':
+                    document.querySelector('[data-nav="discover"]').click();
+                    break;
+                case 'Enter':
+                case ' ':
+                    if (document.activeElement.classList.contains('clickable')) {
+                        document.activeElement.click();
+                    }
+                    break;
+            }
+        });
+
+        // Add touch feedback for mobile devices
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.clickable').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        }
+
+        // Simulate real-time updates
+        setInterval(() => {
+            const timeElements = document.querySelectorAll('.activity-time');
+            timeElements.forEach(timeEl => {
+                const currentTime = timeEl.textContent;
+                if (currentTime.includes('m')) {
+                    const minutes = parseInt(currentTime);
+                    if (minutes > 1) {
+                        timeEl.textContent = `${minutes - 1}m`;
+                    }
+                }
+            });
+        }, 60000); // Update every minute
+
+        // Add loading states
+        function showLoading(element) {
+            element.style.opacity = '0.6';
+            element.style.pointerEvents = 'none';
+        }
+
+        function hideLoading(element) {
+            element.style.opacity = '1';
+            element.style.pointerEvents = 'auto';
+        }
+
+        // Simulate API calls
+        function simulateAPICall(element, message) {
+            showLoading(element);
+            setTimeout(() => {
+                hideLoading(element);
+                showNotification(message);
+            }, 1000);
+        }
+        
+        // Track scroll behavior
+        let scrollStartTime = Date.now();
+        let scrollEvents = 0;
+        
+        window.addEventListener('scroll', function() {
+            scrollEvents++;
+            if (scrollEvents === 1) {
+                // First scroll event
+                gtag('event', 'scroll_start', {
+                    event_category: 'engagement',
+                    event_label: 'user_scrolling',
+                    value: 1,
+                    custom_parameter_1: 'scroll_start',
+                    custom_parameter_2: 'first_scroll',
+                    custom_parameter_3: new Date().toISOString()
+                });
+            }
+        });
+        
+        // Track user engagement patterns
+        let lastActivity = Date.now();
+        const activityTimeout = 30000; // 30 seconds
+        
+        function resetActivityTimer() {
+            lastActivity = Date.now();
+        }
+        
+        // Reset timer on user interaction
+        document.addEventListener('click', resetActivityTimer);
+        document.addEventListener('scroll', resetActivityTimer);
+        document.addEventListener('keydown', resetActivityTimer);
+        
+        // Check for user inactivity
+        setInterval(() => {
+            const timeSinceLastActivity = Date.now() - lastActivity;
+            if (timeSinceLastActivity > activityTimeout) {
+                gtag('event', 'user_inactivity', {
+                    event_category: 'engagement',
+                    event_label: 'inactive_period',
+                    value: Math.round(timeSinceLastActivity / 1000),
+                    custom_parameter_1: 'user_inactivity',
+                    custom_parameter_2: `${Math.round(timeSinceLastActivity / 1000)}s`,
+                    custom_parameter_3: new Date().toISOString()
+                });
+                lastActivity = Date.now(); // Reset to prevent spam
+            }
+        }, 60000); // Check every minute
+        
+        // Track viewport visibility changes
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                gtag('event', 'page_hidden', {
+                    event_category: 'engagement',
+                    event_label: 'user_left_page',
+                    value: 1,
+                    custom_parameter_1: 'page_hidden',
+                    custom_parameter_2: 'tab_switch_or_minimize',
+                    custom_parameter_3: new Date().toISOString()
+                });
+            } else {
+                gtag('event', 'page_visible', {
+                    event_category: 'engagement',
+                    event_label: 'user_returned_to_page',
+                    value: 1,
+                    custom_parameter_1: 'page_visible',
+                    custom_parameter_2: 'tab_focus',
+                    custom_parameter_3: new Date().toISOString()
+                });
+            }
+        });
+    </script>
+</body>
+</html>
